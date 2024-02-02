@@ -16,8 +16,8 @@
                 <th></th>
                 <th>Name of Thing</th>
                 <th>Wattage of Thing</th>
-                <th>Hours on Per Day</th>
-                <th>Peak Hours?</th>
+                <th>Hours Thing is on Per Day</th>
+                <th>On Peak Hours? (Include Mid-peak)</th>
                 <th>kWh/month</th>
                 <th>Cost/month</th>
             </tr>
@@ -29,9 +29,9 @@
                 <td contenteditable="true" class="editableCell"></td>
                 <td contenteditable="true" class="editableCell"></td>
                 <td class="radio-cell">
-                    <input type="radio" name="options1" value="Not Peak">No
-                    <input type="radio" name="options1" value="Part Peak">Partly
-                    <input type="radio" name="options1" value="Peak">Yes
+                    <input type="radio" name="options1" value="No">No
+                    <input type="radio" name="options1" value="Partly">Partly
+                    <input type="radio" name="options1" value="Yes">Yes
                 </td>
                 <td contenteditable="false" class="hoverable"></td>
                 <td contenteditable="false" class="hoverable"></td>
@@ -40,8 +40,8 @@
     </table>
 
     <div class="buttons">
-        <button class="add-row-button">Add Row</button>
-        <button class="delete-row-button">Delete Row</button>
+        <button class="add-row-button">Add Thing</button>
+        <button class="delete-row-button">Delete Last Thing</button>
         <button class="submit-button">Submit</button>
     </div>
 

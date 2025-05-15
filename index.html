@@ -4,48 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Energy Consumption Calculator</title>
+    <title>JHU Course Evaluation Analysis</title>
 </head>
 <body>
-
-    <h1>Energy Consumption Calculator</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Name of Thing</th>
-                <th>Wattage of Thing</th>
-                <th>Hours Thing is on Per Day</th>
-                <th>On Peak Hours? (Include Mid-peak)</th>
-                <th>kWh/month</th>
-                <th>Cost/month</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td contenteditable="true"></td>
-                <td contenteditable="true" class="editableCell"></td>
-                <td contenteditable="true" class="editableCell"></td>
-                <td class="radio-cell">
-                    <input type="radio" name="options1" value="No">No
-                    <input type="radio" name="options1" value="Partly">Partly
-                    <input type="radio" name="options1" value="Yes">Yes
-                </td>
-                <td contenteditable="false" class="hoverable"></td>
-                <td contenteditable="false" class="hoverable"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="buttons">
-        <button class="add-row-button">Add Thing</button>
-        <button class="delete-row-button">Delete Last Thing</button>
-        <button class="submit-button">Submit</button>
-    </div>
-
-    <div class="result"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="script.js"></script>

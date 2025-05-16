@@ -46,11 +46,8 @@ document.getElementById('smsForm').addEventListener('submit', async e => {
   try {
     const res  = await fetch(endpoint, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Receiver'     : receiver
-      },
-      body: new URLSearchParams({ body })
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ receiver, body })
     });
     status.textContent = await res.text();
   } catch (err) {

@@ -1,57 +1,58 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8"><title>Send a goofy SMS</title>
-<link rel="stylesheet" href="css/styles.css">
-<script type="module">
-import { getUser, collectForm } from './js/main.js';
+  <meta charset="UTF-8">
+  <title>Official Warning</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module">
+    import { getUser, collectForm } from './js/main.js';
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('title').textContent = 'OFFICIAL WARNING';
+      document.getElementById('spouse-line').textContent =
+        'Your spouse is in a potentially hazardous mood today, due to';
 
-window.addEventListener('DOMContentLoaded',()=>{
-  // personalise heading
-  const u = getUser();
-  document.getElementById('who').textContent = u ? u.toUpperCase() : '???';
-
-  const form = document.querySelector('form');
-  form.addEventListener('submit', e=>{
-    e.preventDefault();
-    const payload = collectForm(form);
-    console.log(payload);           // <-- do your Twilio fetch here
-
-    // Demo: show what we captured
-    document.getElementById('result').textContent =
-      JSON.stringify(payload,null,2);
-  });
-});
-</script>
+      const form = document.getElementById('warnForm');
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const payload = collectForm(form);
+        console.log(payload);
+        document.getElementById('result').textContent =
+          JSON.stringify(payload, null, 2);
+      });
+    });
+  </script>
 </head>
 <body>
+  <div class="container">
+    <h1 class="title" id="title"></h1>
+    <h2 class="danger">DANGER!</h2>
 
-<h2 style="margin-top:2rem;">Meme generator for <span id="who"></span></h2>
+    <div class="form-line"></div>
+    <div class="form-header">
+      <div class="mood-text" id="spouse-line"></div>
+    </div>
+    <div class="form-line"></div>
 
-<form>
-  <!-- Example checkbox set -->
-  <fieldset>
-    <legend>Pick your vibe</legend>
-    <label><input type="checkbox" name="vibe" value="salty"> salty 🧂</label>
-    <label><input type="checkbox" name="vibe" value="happy"> happy 😊</label>
-    <label><input type="checkbox" name="vibe" value="chaotic"> chaotic 🤪</label>
-  </fieldset>
+    <form id="warnForm">
+      <div class="check-grid">
+        <label><input type="checkbox" name="reason" value="did"> Something you did</label>
+        <label><input type="checkbox" name="reason" value="outside"> Something outside of your control</label>
+        <label><input type="checkbox" name="reason" value="didnt"> Something you didn’t do</label>
+        <label><input type="checkbox" name="reason" value="all"> All of the above</label>
+        <label><input type="checkbox" name="reason" value="dream"> Something you did in a dream</label>
+      </div>
 
-  <!-- Another checkbox set -->
-  <fieldset>
-    <legend>Extras</legend>
-    <label><input type="checkbox" name="extra" value="cats"> add cats 🐈</label>
-    <label><input type="checkbox" name="extra" value="snakes"> add snakes 🐍</label>
-  </fieldset>
+      <div class="instructions">
+        Please be cautious and keep your distance and/or purchase gifts.
+      </div>
 
-  <!-- Free-text -->
-  <label>Custom line:
-    <input type="text" name="freeText" placeholder="Type anything…" />
-  </label>
+      <label for="further">FURTHER INSTRUCTIONS</label>
+      <textarea id="further" name="further" placeholder="(optional)"></textarea>
 
-  <button type="submit">💥  Fire!</button>
-</form>
+      <button type="submit">ACKNOWLEDGE</button>
+    </form>
 
-<pre id="result"></pre>
-
+    <pre id="result"></pre>
+  </div>
 </body>
 </html>

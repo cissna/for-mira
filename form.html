@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8"><title>Send a goofy SMS</title>
+<link rel="stylesheet" href="css/styles.css">
+<script type="module">
+import { getUser, collectForm } from './js/main.js';
+
+window.addEventListener('DOMContentLoaded',()=>{
+  // personalise heading
+  const u = getUser();
+  document.getElementById('who').textContent = u ? u.toUpperCase() : '???';
+
+  const form = document.querySelector('form');
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const payload = collectForm(form);
+    console.log(payload);           // <-- do your Twilio fetch here
+
+    // Demo: show what we captured
+    document.getElementById('result').textContent =
+      JSON.stringify(payload,null,2);
+  });
+});
+</script>
+</head>
+<body>
+
+<h2 style="margin-top:2rem;">Meme generator for <span id="who"></span></h2>
+
+<form>
+  <!-- Example checkbox set -->
+  <fieldset>
+    <legend>Pick your vibe</legend>
+    <label><input type="checkbox" name="vibe" value="salty"> salty 🧂</label>
+    <label><input type="checkbox" name="vibe" value="happy"> happy 😊</label>
+    <label><input type="checkbox" name="vibe" value="chaotic"> chaotic 🤪</label>
+  </fieldset>
+
+  <!-- Another checkbox set -->
+  <fieldset>
+    <legend>Extras</legend>
+    <label><input type="checkbox" name="extra" value="cats"> add cats 🐈</label>
+    <label><input type="checkbox" name="extra" value="snakes"> add snakes 🐍</label>
+  </fieldset>
+
+  <!-- Free-text -->
+  <label>Custom line:
+    <input type="text" name="freeText" placeholder="Type anything…" />
+  </label>
+
+  <button type="submit">💥  Fire!</button>
+</form>
+
+<pre id="result"></pre>
+
+</body>
+</html>

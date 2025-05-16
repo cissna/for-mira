@@ -1,60 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Quick SMS sender</title>
-<style>
- body{font-family:system-ui;margin:2rem;}
- label{display:block;margin:.5rem 0;}
- textarea{width:100%;height:6rem;}
- button{padding:.4rem 1rem;border-radius:.5rem;border:1px solid #ccc;}
-</style>
-</head>
-<body>
+<meta charset="UTF-8"><title>Login</title>
+<link rel="stylesheet" href="css/styles.css">
+<script type="module">
+import { setUser } from './js/main.js';
 
-<h1>Send an SMS</h1>
+function go(name){
+  setUser(name);            // remember choice
+  window.location.href='form.html';
+}
 
-<form id="smsForm">
-  <label>
-    Recipient:
-    <select id="receiver">
-      <option value="isaac">Isaac</option>
-      <option value="mira">Mira</option>
-    </select>
-  </label>
-
-  <label>
-    Message:<br>
-    <textarea id="message" required></textarea>
-  </label>
-
-  <button type="submit">Send</button>
-</form>
-
-<pre id="status"></pre>
-
-<script>
-const endpoint = 'https://backend-5491.twil.io/main';
-
-document.getElementById('smsForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const receiver = document.getElementById('receiver').value;
-  const body     = document.getElementById('message').value;
-  const status   = document.getElementById('status');
-
-  status.textContent = '…sending';
-  try {
-    const res  = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ receiver, body })
-    });
-    status.textContent = await res.text();
-  } catch (err) {
-    status.textContent = '🚫 ' + err;
-  }
+window.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('btn-isaac').onclick=()=>go('isaac');
+  document.getElementById('btn-mira' ).onclick=()=>go('mira');
 });
 </script>
-
+</head>
+<body>
+  <h1 style="margin-top:3rem;font-size:clamp(2rem,6vw,3.5rem);">Pick your persona</h1>
+  <button id="btn-isaac" class="login-btn">ISAAC 😎</button>
+  <button id="btn-mira"  class="login-btn">MIRA 🤪</button>
 </body>
 </html>

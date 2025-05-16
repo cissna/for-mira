@@ -9,7 +9,20 @@
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('title').textContent = 'OFFICIAL WARNING';
       document.getElementById('spouse-line').textContent =
-        'Your spouse is in a potentially hazardous mood today, due to';
+        'Your spouse is in a potentially HAZARDOUS mood today, due to';
+
+      // checkbox sync logic
+      const allCb = document.querySelector('input[name="reason"][value="all"]');
+      const otherCbs = Array.from(document.querySelectorAll('input[name="reason"]'))
+        .filter(cb => cb !== allCb);
+
+      allCb.addEventListener('change', () => {
+        otherCbs.forEach(cb => { cb.checked = allCb.checked; });
+      });
+      otherCbs.forEach(cb => cb.addEventListener('change', () => {
+        const allChecked = otherCbs.every(o => o.checked);
+        allCb.checked = allChecked;
+      }));
 
       const form = document.getElementById('warnForm');
       form.addEventListener('submit', e => {
@@ -42,6 +55,7 @@
         <label><input type="checkbox" name="reason" value="dream"> Something you did in a dream</label>
       </div>
 
+      <div class="form-line"></div>
       <div class="instructions">
         Please be cautious and keep your distance and/or purchase gifts.
       </div>

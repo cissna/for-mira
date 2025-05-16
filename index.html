@@ -1,14 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>JHU Course Evaluation Analysis</title>
+<meta charset="UTF-8" />
+<title>Quick SMS sender</title>
+<style>
+ body{font-family:system-ui;margin:2rem;}
+ label{display:block;margin:.5rem 0;}
+ textarea{width:100%;height:6rem;}
+ button{padding:.4rem 1rem;border-radius:.5rem;border:1px solid #ccc;}
+</style>
 </head>
 <body>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="script.js"></script>
+<h1>Send an SMS</h1>
+
+<form id="smsForm">
+  <label>
+    Recipient:
+    <select id="receiver">
+      <option value="isaac">Isaac</option>
+      <option value="mira">Mira</option>
+    </select>
+  </label>
+
+  <label>
+    Message:<br>
+    <textarea id="message" required></textarea>
+  </label>
+
+  <button type="submit">Send</button>
+</form>
+
+<pre id="status"></pre>
+
+<script>
+const endpoint = 'https://backend-5491.twil.io/main';
+
+document.getElementById('smsForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const receiver = document.getElementById('receiver').value;
+  const body     = document.getElementById('message').value;
+  const status   = document.getElementById('status');
+
+  status.textContent = '…sending';
+  try {
+    const res  = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Receiver'     : receiver
+      },
+      body: new URLSearchParams({ body })
+    });
+    status.textContent = await res.text();
+  } catch (err) {
+    status.textContent = '🚫 ' + err;
+  }
+});
+</script>
+
 </body>
 </html>

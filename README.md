@@ -11,3 +11,7 @@ Feel free to explore the calculator and let me know if you have any feedback or 
 ## Latest Update (5/13/2025)
 
 I'm planning on incorporating this with my jhu-course-evalutation-analysis to make a website where people can query a class and it will give them valuable information that is a pain to collect manually. I'm not exactly sure what the next step is, so I'm starting by deleting everything and I'll figure out what's next...next
+
+## Later Update (5/15/2025)
+
+Mildly discourouged about jhu-course-evaluation thing so I'm putting it on the backburner and using this to make a website for Mira.

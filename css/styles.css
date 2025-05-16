@@ -13,8 +13,8 @@ body { font-family:system-ui; background:#fff; color:#222; display:flex; flex-di
   transition:transform .15s ease;
 }
 .login-btn:is(:hover,:focus) { transform:scale(1.08) }
-#btn-isaac { background:#9a4dff; color:#fff }
-#btn-mira  { background:#3cff93; color:#000 }
+#btn-isaac { background:#05a3c7; color:#fff }
+#btn-mira  { background:#7a0bd5; color:#fff }
 
 /* Form page styling matching Official Warning meme */
 .container {

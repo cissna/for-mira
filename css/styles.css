@@ -15,8 +15,8 @@ body{font-family:system-ui;background:#fafafa;color:#222;display:flex;flex-direc
 .login-btn:is(:hover,:focus){transform:scale(1.08)}
 
 /* Isaac = loud purple, Mira = neon green */
-#btn-isaac{background:#9a4dff;color:#fff}
-#btn-mira {background:#3cff93;color:#000}
+#btn-isaac{background:#056a81;color:#ffffff}
+#btn-mira {background:#74088a;color:#ffffff}
 
 /* ---------- form page ---------- */
 form{

@@ -25,13 +25,54 @@
       }));
 
       const form = document.getElementById('warnForm');
-      form.addEventListener('submit', e => {
+      form.addEventListener('submit', async e => {
         e.preventDefault();
         const payload = collectForm(form);
-        console.log(payload);
-        document.getElementById('result').textContent =
-          JSON.stringify(payload, null, 2);
+        // TEXT TO BE SENT VIA TWILIO:
+        // Build SMS body
+        let body = "YOU ARE RECEIVING A WARNING FROM YOUR SPOUSE.\nThey are in a potentially hazardous mood today, according to them because of\n";
+
+        // Normalize reasons to array
+        let reasons = payload.reason;
+        if (!Array.isArray(reasons)) reasons = reasons ? [reasons] : [];
+
+        // If "all" selected, replace with every reason
+        if (reasons.includes('all')) {
+          reasons = [
+            "Something you did",
+            "Something outside of your control",
+            "Something you didn't do",
+            "Something you did in a dream"
+          ];
+        }
+
+        // Append each reason
+        reasons.forEach(r => {
+            body += `- ${r}\n`;
+        });
+
+        body += 'Please be cautious and keep your distance and/or purchase gifts.';
+
+        // Check if there's further instruction
+        if (payload.further) {
+          body += `\n\nFURTHER INSTRUCTIONS:\n${payload.further}`;
+        }
+        // TEXT END ^^ Twilio stuff below:
+        const receiver = payload.user === 'isaac' ? 'mira' : 'isaac';  // send to the opposite person
+        document.getElementById('result').textContent = '…sending';
+
+        try {
+          const res  = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ receiver, body })
+          });
+          document.getElementById('result').textContent = await res.text();
+        } catch (err) {
+          document.getElementById('result').textContent = '🚫 ' + err;
+        }
       });
+
     });
   </script>
 </head>
@@ -48,11 +89,11 @@
 
     <form id="warnForm">
       <div class="check-grid">
-        <label><input type="checkbox" name="reason" value="did"> Something you did</label>
-        <label><input type="checkbox" name="reason" value="outside"> Something outside of your control</label>
-        <label><input type="checkbox" name="reason" value="didnt"> Something you didn’t do</label>
-        <label><input type="checkbox" name="reason" value="all"> All of the above</label>
-        <label><input type="checkbox" name="reason" value="dream"> Something you did in a dream</label>
+        <label><input type="checkbox" name="reason" value="Something you did"> Something you did</label>
+        <label><input type="checkbox" name="reason" value="Something outside of your control"> Something outside of your control</label>
+        <label><input type="checkbox" name="reason" value="Something you didn’t do"> Something you didn’t do</label>
+        <label><input type="checkbox" name="reason" value="everything"> All of the above</label>
+        <label><input type="checkbox" name="reason" value="Something you did in a dream"> Something you did in a dream</label>
       </div>
 
       <div class="form-line"></div>
@@ -63,7 +104,7 @@
       <label for="further">FURTHER INSTRUCTIONS</label>
       <textarea id="further" name="further" placeholder="(optional)"></textarea>
 
-      <button type="submit">ACKNOWLEDGE</button>
+      <button type="submit">SEND TO SPOUSE</button>
     </form>
 
     <pre id="result"></pre>

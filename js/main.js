@@ -1,32 +1,13 @@
-const STORAGE_KEY = 'chosenUser';
+// Import modular services and utilities
+import { setUser, getUser } from './services/userService.js';
+import { collectForm } from './utils/formUtils.js';
+import { sendToMira } from './services/twilioService.js';
+import { buildSimpleMessage } from './utils/messageBuilder.js';
+import { showModal, hideModal } from './components/modalManager.js';
+import { addClass } from './utils/domUtils.js';
 
-export function setUser(u) {
-  localStorage.setItem(STORAGE_KEY, u);
-}
-
-export function getUser() {
-  return localStorage.getItem(STORAGE_KEY) || '';
-}
-
-export function collectForm(form) {
-  const formData = new FormData(form);
-  const data = {};
-
-  for (const [key, value] of formData.entries()) {
-    if (data.hasOwnProperty(key)) {
-      if (Array.isArray(data[key])) {
-        data[key].push(value);
-      } else {
-        data[key] = [data[key], value];
-      }
-    } else {
-      data[key] = value;
-    }
-  }
-
-  data.user = getUser();
-  return data;
-}
+// Export functions for backward compatibility with hazardous page
+export { setUser, getUser, collectForm };
 
 // New homepage functionality
 document.addEventListener('DOMContentLoaded', () => {
@@ -38,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const hazardBtn = document.getElementById('hazard-warning-btn');
   if (hazardBtn) {
     hazardBtn.addEventListener('click', () => {
-      showLoginModal();
+      showModal('login-modal');
     });
   }
   
@@ -49,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (isaacBtn) {
     isaacBtn.addEventListener('click', () => {
       setUser('isaac');
-      hideLoginModal();
+      hideModal('login-modal');
       window.location.href = 'hazardous';
     });
   }
@@ -57,20 +38,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (miraBtn) {
     miraBtn.addEventListener('click', () => {
       setUser('mira');
-      hideLoginModal();
+      hideModal('login-modal');
       window.location.href = 'hazardous';
     });
   }
   
   // Modal close handlers
   if (closeBtn) {
-    closeBtn.addEventListener('click', hideLoginModal);
+    closeBtn.addEventListener('click', () => hideModal('login-modal'));
   }
   
   if (modal) {
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
-        hideLoginModal();
+        hideModal('login-modal');
       }
     });
   }
@@ -88,53 +69,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       
-      await submitToAPI(inputText, apiResponse);
+      await submitSuggestionToTwilio(inputText, apiResponse);
     });
   }
 });
 
-function showLoginModal() {
-  const modal = document.getElementById('login-modal');
-  if (modal) {
-    modal.classList.remove('hidden');
-  }
-}
-
-function hideLoginModal() {
-  const modal = document.getElementById('login-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-  }
-}
-
-// API Integration
-async function submitToAPI(textInput, responseElement) {
-  const API_ENDPOINT = 'https://your-suggestions-endpoint.com/process'; // Placeholder endpoint
-  
+// Twilio Integration for Suggestions
+async function submitSuggestionToTwilio(textInput, responseElement) {
   responseElement.textContent = 'Submitting...';
-  responseElement.classList.add('visible');
+  addClass('suggestions-response', 'visible');
   
   try {
-    const response = await fetch(API_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        input: textInput,
-        timestamp: new Date().toISOString()
-      })
-    });
+    // Get current user to include in message
+    const currentUser = getUser() || 'anonymous';
     
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    // Build simple message for suggestion
+    const message = buildSimpleMessage(textInput, currentUser);
     
-    const result = await response.json();
-    responseElement.textContent = `Success!\nResponse: ${JSON.stringify(result, null, 2)}`;
+    // Send to Mira via Twilio
+    const response = await sendToMira(message);
+    responseElement.textContent = `Success! Message sent to Mira.\nResponse: ${response}`;
     
   } catch (error) {
-    responseElement.textContent = `Error: ${error.message}\n\nNote: This is a placeholder endpoint. Replace with your actual API URL.`;
+    responseElement.textContent = `Error: ${error.message}`;
   }
 }

@@ -1,26 +1,53 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8"><title>Login</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/styles.css">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<script type="module">
-import { setUser } from './js/main.js';
-
-function go(name){
-  setUser(name);            // remember choice
-  window.location.href='form.html';
-}
-
-window.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('btn-isaac').onclick=()=>go('isaac');
-  document.getElementById('btn-mira' ).onclick=()=>go('mira');
-});
-</script>
+  <meta charset="UTF-8">
+  <title>Mira's Projects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <h1 style="margin-top:3rem;font-size:clamp(2rem,6vw,3.5rem);">Who are you</h1>
-  <button id="btn-isaac" class="login-btn">ISAAC 🧌</button>
-  <button id="btn-mira"  class="login-btn">MIRA 🫦</button>
+  <div class="homepage-container">
+    <header>
+      <h1>Mira's Projects</h1>
+      <p>Welcome to your project hub</p>
+    </header>
+    
+    <main>
+      <!-- Project Buttons Section -->
+      <section class="projects-section">
+        <h2>Available Projects</h2>
+        <div class="project-grid">
+          <button id="hazard-warning-btn" class="project-btn">
+            ⚠️ Hazardous Mood Warning
+          </button>
+          <!-- Future project buttons will go here -->
+        </div>
+      </section>
+      
+      <!-- API Integration Section -->
+      <section class="api-section">
+        <h2>API Integration</h2>
+        <div class="api-container">
+          <textarea id="api-input" placeholder="Enter your text here..."></textarea>
+          <button id="api-submit-btn">Submit to API</button>
+          <div id="api-response" class="response-area"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Who are you?</h2>
+      <button id="btn-isaac" class="login-btn">ISAAC 🧌</button>
+      <button id="btn-mira" class="login-btn">MIRA 🫦</button>
+      <button class="modal-close">&times;</button>
+    </div>
+  </div>
+  
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

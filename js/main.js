@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isaacBtn.addEventListener('click', () => {
       setUser('isaac');
       hideLoginModal();
-      window.location.href = 'form.html';
+      window.location.href = 'hazardous';
     });
   }
   
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     miraBtn.addEventListener('click', () => {
       setUser('mira');
       hideLoginModal();
-      window.location.href = 'form.html';
+      window.location.href = 'hazardous';
     });
   }
   

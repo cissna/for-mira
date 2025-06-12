@@ -40,9 +40,5 @@ export function buildHazardousWarningMessage(payload) {
 /**
  * Build a simple message (e.g. for suggestions)
  * @param {string} text - The main text input (suggestion)
- * @param {string} sender - The sender's username
  * @returns {string}
  */
-export function buildSimpleMessage(text, sender) {
-  return `New suggestion from ${sender}:\n${text}`;
-}

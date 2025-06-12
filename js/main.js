@@ -2,7 +2,6 @@
 import { setUser, getUser } from './services/userService.js';
 import { collectForm } from './utils/formUtils.js';
 import { sendToIsaac } from './services/twilioService.js';
-import { buildSimpleMessage } from './utils/messageBuilder.js';
 import { showModal, hideModal } from './components/modalManager.js';
 import { addClass } from './utils/domUtils.js';
 
@@ -80,11 +79,8 @@ async function submitSuggestionToTwilio(textInput, responseElement) {
   addClass('suggestions-response', 'visible');
   
   try {
-    // Get current user to include in message
-    const currentUser = getUser() || 'anonymous';
-    
     // Build simple message for suggestion
-    const message = buildSimpleMessage(textInput, currentUser);
+    const message = `New suggestion from Mira:\n${textInput}`
     
     // Send to Isaac via Twilio
     const response = await sendToIsaac(message);

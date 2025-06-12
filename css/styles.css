@@ -158,18 +158,6 @@ header p {
   margin-bottom: 1rem;
 }
 
-#suggestions-input {
-  width: 100%;
-  min-height: 120px;
-  padding: 1rem; /* Padding is already set to 1rem */
-  border: 2px solid #ddd;
-  border-radius: 0.5rem;
-  font-size: 1rem; /* Font size is already set to 1rem */
-  font-family: inherit;
-  resize: vertical;
-  margin-bottom: 1rem;
-}
-
 #suggestions-submit-btn {
   background: #28a745;
   color: white;

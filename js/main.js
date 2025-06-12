@@ -76,9 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   // API functionality
-  const apiSubmitBtn = document.getElementById('api-submit-btn');
-  const apiInput = document.getElementById('api-input');
-  const apiResponse = document.getElementById('api-response');
+  const apiSubmitBtn = document.getElementById('suggestions-submit-btn');
+  const apiInput = document.getElementById('suggestions-input');
+  const apiResponse = document.getElementById('suggestions-response');
   
   if (apiSubmitBtn && apiInput && apiResponse) {
     apiSubmitBtn.addEventListener('click', async () => {
@@ -109,7 +109,7 @@ function hideLoginModal() {
 
 // API Integration
 async function submitToAPI(textInput, responseElement) {
-  const API_ENDPOINT = 'https://your-api-endpoint.com/process'; // Placeholder endpoint
+  const API_ENDPOINT = 'https://your-suggestions-endpoint.com/process'; // Placeholder endpoint
   
   responseElement.textContent = 'Submitting...';
   responseElement.classList.add('visible');

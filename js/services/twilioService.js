@@ -37,9 +37,9 @@ export async function sendToSpouse(body, currentUser) {
 }
 
 /**
- * Send a message directly to Mira (for suggestions)
+ * Send a message directly to Isaac (for suggestions)
  * @param {string} body - message content
  */
-export async function sendToMira(body) {
-  return await sendTwilioMessage('mira', body);
+export async function sendToIsaac(body) {
+  return await sendTwilioMessage('isaac', body);
 }

@@ -1,7 +1,7 @@
 // Import modular services and utilities
 import { setUser, getUser } from './services/userService.js';
 import { collectForm } from './utils/formUtils.js';
-import { sendToMira } from './services/twilioService.js';
+import { sendToIsaac } from './services/twilioService.js';
 import { buildSimpleMessage } from './utils/messageBuilder.js';
 import { showModal, hideModal } from './components/modalManager.js';
 import { addClass } from './utils/domUtils.js';
@@ -86,9 +86,9 @@ async function submitSuggestionToTwilio(textInput, responseElement) {
     // Build simple message for suggestion
     const message = buildSimpleMessage(textInput, currentUser);
     
-    // Send to Mira via Twilio
-    const response = await sendToMira(message);
-    responseElement.textContent = `Success! Message sent to Mira.\nResponse: ${response}`;
+    // Send to Isaac via Twilio
+    const response = await sendToIsaac(message);
+    responseElement.textContent = response;
     
   } catch (error) {
     responseElement.textContent = `Error: ${error.message}`;
